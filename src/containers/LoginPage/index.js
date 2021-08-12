@@ -59,10 +59,10 @@ class LoginPage extends Component {
     event.preventDefault();
     let { username, password } = this.state;
     //
-    callApi("/user/login", "POST", { username, password })
+    callApi("user/login", "POST", { username, password })
       .then((res) => {
         if (res) {
-          callApi("/user", "POST", { username, password }).then((res) => {
+          callApi("user", "POST", { username, password }).then((res) => {
             const { data } = res;
             const { accessToken, refreshToken } = data;
             const cookies = new Cookies();
@@ -73,7 +73,7 @@ class LoginPage extends Component {
           });
         }
       })
-      .catch((err) => loginFail(err.response.data));
+      .catch((err) => loginFail(err.response));
   };
 
   render() {
