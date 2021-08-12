@@ -20,6 +20,7 @@ import {
   toastSuccess,
 } from "./../../helpers/toastHelper.js";
 import callApi from "../../apis/apiCaller";
+import PropTypes from "prop-types";
 
 class SignupPage extends Component {
   constructor(props) {
@@ -136,5 +137,7 @@ class SignupPage extends Component {
     );
   }
 }
-
+SignupPage.propTypes = {
+  classes: PropTypes.object,
+};
 export default withStyles(styles)(withRouter(SignupPage));

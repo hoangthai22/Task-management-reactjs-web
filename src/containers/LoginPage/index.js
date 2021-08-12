@@ -18,7 +18,7 @@ import * as authActions from "./../../actions/auth";
 import { withRouter, Link } from "react-router-dom";
 import callApi from "./../../apis/apiCaller.js";
 import Cookies from "universal-cookie";
-
+import PropTypes from "prop-types";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -47,7 +47,7 @@ class LoginPage extends Component {
   //   if (prevState.isLogin !== this.state.isLogin) {
   //     console.log("login",this.props.isLogin);
   //     console.log(prevProps.isLogin);
-      
+
   //   }
   //   //
   //   // }
@@ -73,7 +73,13 @@ class LoginPage extends Component {
           });
         }
       })
-      .catch((err) => loginFail(err.response.data));
+      .catch((err) => {
+        if (err) {
+          return loginFail(err);
+        } else if (err.response) {
+          return loginFail(err.response.data);
+        }
+      });
   };
 
   render() {
@@ -89,7 +95,7 @@ class LoginPage extends Component {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <form className={classes.form} >
+          <form className={classes.form}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -146,7 +152,19 @@ class LoginPage extends Component {
     );
   }
 }
-
+LoginPage.propTypes = {
+  classes: PropTypes.object,
+  userInf: PropTypes.object,
+  handleSumbit: PropTypes.func,
+  authActionsCreater: PropTypes.shape({
+    hideModal: PropTypes.function,
+  }),
+  taskActionsCreater: PropTypes.shape({
+    loginSuccess: PropTypes.function,
+    loginFail: PropTypes.function,
+  }),
+  isLogin: PropTypes.bool,
+};
 const mapStateToProps = (state) => {
   return {
     userInf: state.auth.userInf,
