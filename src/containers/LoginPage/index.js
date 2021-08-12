@@ -74,10 +74,10 @@ class LoginPage extends Component {
         }
       })
       .catch((err) => {
-        if (err) {
-          return loginFail(err);
-        } else if (err.response) {
+        if (err.response) {
           return loginFail(err.response.data);
+        } else if (err) {
+          return loginFail(err);
         }
       });
   };
